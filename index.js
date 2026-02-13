@@ -263,6 +263,7 @@ bot.on("text", async (ctx) => {
     }
 
     delete leadState[uid];
+if (SEATS_LEFT > 0) SEATS_LEFT -= 1;
 
     await ctx.reply(TXT[lang].thanks);
     return sendMainMenu(ctx);
