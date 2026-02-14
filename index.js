@@ -217,6 +217,20 @@ function startLead(ctx) {
 
 // Ловим и RU и UA, даже если чуть отличается текст/эмодзи
 bot.hears(/подключить салон|підключити салон/i, startLead);
+// ====== Back to language ======
+bot.hears(/назад|⬅️ назад/i, (ctx) => {
+  const uid = ctx.from.id;
+
+  // Сброс заявки если пользователь был внутри лид-флоу
+  if (leadState[uid]) {
+    delete leadState[uid];
+  }
+
+  // Сброс языка (по желанию можно не удалять)
+  delete userLang[uid];
+
+  return sendLanguagePicker(ctx);
+});
 
 // ====== Lead answers ======
 bot.on("text", async (ctx) => {
